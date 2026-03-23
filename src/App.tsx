@@ -89,6 +89,28 @@ export default function App() {
   const [analyzing, setAnalyzing] = useState(false)
   const [filter, setFilter] = useState<"pnl" | "winrate" | "volume">("pnl")
   const [alerts, setAlerts] = useState<string[]>([])
+  const [wallet, setWallet] = useState("")
+  const [walletConnected, setWalletConnected] = useState(false)
+
+  async function connectWallet() {
+    const eth = (window as any).ethereum
+    if (eth) {
+      try {
+        const accounts = await eth.request({ method: "eth_requestAccounts" })
+        setWallet(accounts[0].slice(0, 6) + "..." + accounts[0].slice(-4))
+        setWalletConnected(true)
+        toast("✅ Wallet connected!")
+      } catch {
+        setWallet("0xDemo...1234")
+        setWalletConnected(true)
+        toast("✅ Demo wallet connected!")
+      }
+    } else {
+      setWallet("0xDemo...1234")
+      setWalletConnected(true)
+      toast("✅ Demo wallet connected!")
+    }
+  }
 
   const toast = (m: string) => { setNotif(m); setTimeout(() => setNotif(""), 3000) }
 
@@ -182,10 +204,13 @@ export default function App() {
             <Trophy size={16} color="#ffaa00" />
             <span style={{ fontWeight: 800, fontSize: "16px" }}>Pacifica<span style={S.gold}>Race</span></span>
           </div>
-          <div style={{ display: "flex", gap: "6px" }}>
+          <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
             {(["pnl","winrate","volume"] as const).map(f => (
               <button key={f} onClick={() => setFilter(f)} style={{ ...S.btnGhost, padding: "4px 10px", fontSize: "10px", border: `1px solid ${filter===f?"#ffaa00":"#1a2540"}`, color: filter===f?"#ffaa00":"#8899bb" }}>{f === "pnl" ? "PnL" : f === "winrate" ? "Win%" : "Vol"}</button>
             ))}
+            <button onClick={connectWallet} style={{ background: walletConnected ? "#0c1220" : "linear-gradient(135deg,#ffaa00,#ff8800)", border: "1px solid #ffaa0040", borderRadius: "6px", color: walletConnected ? "#ffaa00" : "#000", padding: "4px 10px", fontSize: "10px", fontWeight: 700, cursor: "pointer" }}>
+              {walletConnected ? wallet : "Connect"}
+            </button>
           </div>
         </div>
 
