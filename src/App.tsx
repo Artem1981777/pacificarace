@@ -383,7 +383,7 @@ export default function App() {
                   <div style={{ fontSize: "11px", color: "#4a5a7a", marginTop: "2px" }}>Vol: ${fmt(m.volume)} · Funding: <span style={{ color: m.fundingRate >= 0 ? "#00ff88" : "#ff3366" }}>{(m.fundingRate * 100).toFixed(4)}%</span></div>
                 </div>
                 <div style={{ textAlign: "right" as const }}>
-                  <div style={{ fontSize: "18px", fontWeight: 700, fontFamily: "monospace" }}>${fmt(m.price)}</div>
+                  <div style={{ fontSize: "18px", fontWeight: 700, fontFamily: "monospace" }}>${m.price > 1000 ? m.price.toLocaleString("en", {maximumFractionDigits: 1}) : m.price.toFixed(4)}</div>
                   <div style={{ color: m.change >= 0 ? "#00ff88" : "#ff3366", fontWeight: 700, fontSize: "13px" }}>{m.change >= 0 ? "▲" : "▼"}{Math.abs(m.change).toFixed(2)}%</div>
                 </div>
               </div>
