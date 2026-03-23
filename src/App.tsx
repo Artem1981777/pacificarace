@@ -210,7 +210,7 @@ export default function App() {
     pill: (c: string) => ({ background: c+"18", border: "1px solid "+c+"40", borderRadius: "4px", padding: "2px 8px", fontSize: "10px", fontWeight: 700, color: c }),
     green: { color: "#00ff88" },
     red: { color: "#ff3366" },
-    gold: { color: "#ffaa00" },
+    gold: { color: "#00ff88" },
     mono: { fontFamily: "monospace" },
     btnG: { background: "linear-gradient(135deg,#00ff88,#00cc6a)", border: "none", borderRadius: "8px", color: "#000", padding: "8px 16px", cursor: "pointer", fontWeight: 700, fontSize: "12px" },
     btnGhost: { background: "transparent", border: "1px solid #1a2540", borderRadius: "8px", color: "#e8edf5", padding: "8px 16px", cursor: "pointer", fontSize: "12px" },
@@ -224,14 +224,14 @@ export default function App() {
       {page === "leaderboard" && <>
         <div style={S.header}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <Trophy size={16} color="#ffaa00" />
+            <Trophy size={16} color="#00ff88" />
             <span style={{ fontWeight: 800, fontSize: "16px" }}>Pacifica<span style={S.gold}>Race</span></span>
           </div>
           <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
             {(["pnl","winrate","volume"] as const).map(f => (
-              <button key={f} onClick={() => setFilter(f)} style={{ ...S.btnGhost, padding: "4px 10px", fontSize: "10px", border: `1px solid ${filter===f?"#ffaa00":"#1a2540"}`, color: filter===f?"#ffaa00":"#8899bb" }}>{f === "pnl" ? "PnL" : f === "winrate" ? "Win%" : "Vol"}</button>
+              <button key={f} onClick={() => setFilter(f)} style={{ ...S.btnGhost, padding: "4px 10px", fontSize: "10px", border: `1px solid ${filter===f?"#00ff88":"#1a2540"}`, color: filter===f?"#00ff88":"#8899bb" }}>{f === "pnl" ? "PnL" : f === "winrate" ? "Win%" : "Vol"}</button>
             ))}
-            <button onClick={connectWallet} style={{ background: walletConnected ? "#0c1220" : "linear-gradient(135deg,#ffaa00,#ff8800)", border: "1px solid #ffaa0040", borderRadius: "6px", color: walletConnected ? "#ffaa00" : "#000", padding: "4px 10px", fontSize: "10px", fontWeight: 700, cursor: "pointer" }}>
+            <button onClick={connectWallet} style={{ background: walletConnected ? "#0c1220" : "linear-gradient(135deg,#ffaa00,#ff8800)", border: "1px solid #ffaa0040", borderRadius: "6px", color: walletConnected ? "#00ff88" : "#000", padding: "4px 10px", fontSize: "10px", fontWeight: 700, cursor: "pointer" }}>
               {walletConnected ? wallet : "Connect"}
             </button>
           </div>
@@ -252,13 +252,13 @@ export default function App() {
           {sorted.map((t, i) => (
             <div key={t.id} style={{ ...S.card, cursor: "pointer", border: i === 0 ? "1px solid #ffaa0040" : "1px solid #1a2540" }} onClick={() => { setSelectedTrader(t); setPage("trader"); analyzeTrader(t) }}>
               <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
-                <div style={{ fontSize: "10px", color: i===0?"#ffaa00":i===1?"#c0c0c0":i===2?"#cd7f32":"#4a5a7a", fontFamily: "monospace", width: "20px", paddingTop: "4px", fontWeight: 700 }}>#{i+1}</div>
+                <div style={{ fontSize: "10px", color: i===0?"#00ff88":i===1?"#c0c0c0":i===2?"#cd7f32":"#4a5a7a", fontFamily: "monospace", width: "20px", paddingTop: "4px", fontWeight: 700 }}>#{i+1}</div>
                 <div style={{ fontSize: "28px" }}>{t.avatar}</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
                     <span style={{ fontWeight: 700, fontSize: "14px" }}>{t.name}</span>
                     {t.badges.map((b, bi) => <span key={bi} style={{ fontSize: "12px" }}>{b}</span>)}
-                    <span style={{ ...S.pill(t.riskScore==="Low"?"#00ff88":t.riskScore==="Medium"?"#ffaa00":"#ff3366") }}>{t.riskScore}</span>
+                    <span style={{ ...S.pill(t.riskScore==="Low"?"#00ff88":t.riskScore==="Medium"?"#00ff88":"#ff3366") }}>{t.riskScore}</span>
                   </div>
                   <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" as const }}>
                     <span style={{ fontSize: "11px", color: t.pnl >= 0 ? "#00ff88" : "#ff3366", fontWeight: 700, fontFamily: "monospace" }}>{t.pnl >= 0 ? "+" : ""}${fmt(t.pnl)}</span>
@@ -290,11 +290,11 @@ export default function App() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px", textAlign: "center" as const }}>
               {[
                 { l: "Total PnL", v: (selectedTrader.pnl >= 0 ? "+" : "") + "$" + fmt(selectedTrader.pnl), c: selectedTrader.pnl >= 0 ? "#00ff88" : "#ff3366" },
-                { l: "Win Rate", v: selectedTrader.winRate + "%", c: "#ffaa00" },
+                { l: "Win Rate", v: selectedTrader.winRate + "%", c: "#00ff88" },
                 { l: "Trades", v: selectedTrader.trades.toString(), c: "#8899bb" },
                 { l: "Volume", v: "$" + fmt(selectedTrader.volume), c: "#8899bb" },
                 { l: "Followers", v: fmt(selectedTrader.followers), c: "#8899bb" },
-                { l: "Risk", v: selectedTrader.riskScore, c: selectedTrader.riskScore==="Low"?"#00ff88":selectedTrader.riskScore==="Medium"?"#ffaa00":"#ff3366" },
+                { l: "Risk", v: selectedTrader.riskScore, c: selectedTrader.riskScore==="Low"?"#00ff88":selectedTrader.riskScore==="Medium"?"#00ff88":"#ff3366" },
               ].map(s => (
                 <div key={s.l}>
                   <div style={{ fontSize: "18px", fontWeight: 700, color: s.c, fontFamily: "monospace" }}>{s.v}</div>
@@ -397,7 +397,7 @@ export default function App() {
           {alerts.length > 0 && (
             <div style={S.card}>
               <div style={{ fontSize: "11px", letterSpacing: "2px", color: "#4a5a7a", marginBottom: "8px" }}>ACTIVE ALERTS</div>
-              {alerts.map((a, i) => <div key={i} style={{ fontSize: "12px", color: "#ffaa00", padding: "3px 0" }}>🔔 {a}</div>)}
+              {alerts.map((a, i) => <div key={i} style={{ fontSize: "12px", color: "#00ff88", padding: "3px 0" }}>🔔 {a}</div>)}
             </div>
           )}
         </div>
@@ -407,16 +407,16 @@ export default function App() {
       {page === "tournament" && <>
         <div style={S.header}>
           <span style={{ fontWeight: 800 }}>🏎️ PacificaRace Tournament</span>
-          <span style={{ ...S.pill("#ffaa00") }}>LIVE</span>
+          <span style={{ ...S.pill("#00ff88") }}>LIVE</span>
         </div>
         <div style={{ padding: "12px" }}>
           <div style={{ ...S.card, background: "linear-gradient(135deg,#0d0a00,#1a1200)", border: "1px solid #ffaa0040" }}>
-            <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#ffaa00", marginBottom: "8px" }}>WEEKLY CHAMPIONSHIP</div>
-            <div style={{ fontSize: "22px", fontWeight: 900, color: "#ffaa00", fontFamily: "monospace" }}>$5,000 USDC</div>
+            <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#00ff88", marginBottom: "8px" }}>WEEKLY CHAMPIONSHIP</div>
+            <div style={{ fontSize: "22px", fontWeight: 900, color: "#00ff88", fontFamily: "monospace" }}>$5,000 USDC</div>
             <div style={{ fontSize: "12px", color: "#8899bb", marginTop: "4px" }}>Prize pool · Ends in 4d 12h 33m</div>
             <div style={{ marginTop: "12px", background: "#05070d", borderRadius: "8px", padding: "10px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "#8899bb", marginBottom: "6px" }}>
-                <span>🥇 1st Place</span><span style={{ color: "#ffaa00", fontWeight: 700 }}>$2,500</span>
+                <span>🥇 1st Place</span><span style={{ color: "#00ff88", fontWeight: 700 }}>$2,500</span>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "#8899bb", marginBottom: "6px" }}>
                 <span>🥈 2nd Place</span><span style={{ color: "#c0c0c0", fontWeight: 700 }}>$1,500</span>
@@ -440,7 +440,7 @@ export default function App() {
                 </div>
                 <div style={{ textAlign: "right" as const }}>
                   <div style={{ color: t.pnl >= 0 ? "#00ff88" : "#ff3366", fontWeight: 700, fontFamily: "monospace", fontSize: "13px" }}>{t.pnl >= 0 ? "+" : ""}${fmt(t.pnl)}</div>
-                  <div style={{ fontSize: "10px", color: "#ffaa00" }}>{i===0?"$2,500":i===1?"$1,500":i===2?"$1,000":"—"}</div>
+                  <div style={{ fontSize: "10px", color: "#00ff88" }}>{i===0?"$2,500":i===1?"$1,500":i===2?"$1,000":"—"}</div>
                 </div>
               </div>
             ))}
@@ -459,7 +459,7 @@ export default function App() {
                   <div style={{ fontSize: "11px", color: "#8899bb" }}>Starts {t.starts} · {t.duration}</div>
                 </div>
                 <div style={{ textAlign: "right" as const }}>
-                  <div style={{ color: "#ffaa00", fontWeight: 700, fontSize: "13px" }}>{t.prize}</div>
+                  <div style={{ color: "#00ff88", fontWeight: 700, fontSize: "13px" }}>{t.prize}</div>
                   <button onClick={() => toast("Registered for " + t.name + "!")} style={{ ...S.btnGhost, padding: "3px 8px", fontSize: "10px", marginTop: "4px" }}>Register</button>
                 </div>
               </div>
@@ -476,7 +476,7 @@ export default function App() {
           { id: "markets", l: "Markets", i: <BarChart3 size={16} /> },
           { id: "tournament", l: "Race", i: <span style={{fontSize:16}}>🏎️</span> },
         ].map(n => (
-          <button key={n.id} onClick={() => setPage(n.id)} style={{ flex: 1, background: "none", border: "none", color: page===n.id?"#ffaa00":"#4a5a7a", cursor: "pointer", display: "flex", flexDirection: "column" as const, alignItems: "center", justifyContent: "center", gap: "2px", fontSize: "9px", fontWeight: page===n.id?700:500 }}>
+          <button key={n.id} onClick={() => setPage(n.id)} style={{ flex: 1, background: "none", border: "none", color: page===n.id?"#00ff88":"#4a5a7a", cursor: "pointer", display: "flex", flexDirection: "column" as const, alignItems: "center", justifyContent: "center", gap: "2px", fontSize: "9px", fontWeight: page===n.id?700:500 }}>
             {n.i}<span>{n.l}</span>
           </button>
         ))}
