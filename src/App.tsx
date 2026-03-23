@@ -122,7 +122,7 @@ export default function App() {
         const res = await fetch("https://api.pacifica.fi/api/v1/info/prices")
         const data = await res.json()
         if (data.success && data.data) {
-          const symbols = ["BTC", "ETH", "SOL", "ARB"]
+          const symbols = ["BTC", "ETH", "SOL", "ARB", "DOGE", "SUI", "XRP", "HYPE"]
           const updated = data.data
             .filter((m: any) => symbols.includes(m.symbol))
             .map((m: any) => ({
