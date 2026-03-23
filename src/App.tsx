@@ -93,22 +93,23 @@ export default function App() {
   const [walletConnected, setWalletConnected] = useState(false)
 
   async function connectWallet() {
-    const eth = (window as any).ethereum
-    if (eth) {
+    const phantom = (window as any).solana
+    if (phantom && phantom.isPhantom) {
       try {
-        const accounts = await eth.request({ method: "eth_requestAccounts" })
-        setWallet(accounts[0].slice(0, 6) + "..." + accounts[0].slice(-4))
+        const response = await phantom.connect()
+        const pubkey = response.publicKey.toString()
+        setWallet(pubkey.slice(0, 4) + "..." + pubkey.slice(-4))
         setWalletConnected(true)
-        toast("✅ Wallet connected!")
+        toast("✅ Phantom connected!")
       } catch {
-        setWallet("0xDemo...1234")
+        setWallet("Demo...1234")
         setWalletConnected(true)
-        toast("✅ Demo wallet connected!")
+        toast("✅ Demo mode!")
       }
     } else {
-      setWallet("0xDemo...1234")
+      setWallet("Demo...1234")
       setWalletConnected(true)
-      toast("✅ Demo wallet connected!")
+      toast("✅ Demo mode — Install Phantom for full access!")
     }
   }
 
