@@ -203,10 +203,10 @@ export default function App() {
   )
 
   const S: Record<string, any> = {
-    app: { minHeight: "100vh", background: "#010d03", color: "#e8edf5", fontFamily: "sans-serif", paddingBottom: "64px" },
-    header: { background: "rgba(1,13,3,0.97)", borderBottom: "1px solid #1a2540", padding: "0 16px", height: "52px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky" as const, top: 0, zIndex: 50 },
-    card: { background: "#020f04", border: "1px solid #1a2540", borderRadius: "10px", padding: "14px", marginBottom: "8px" },
-    nav: { position: "fixed" as const, bottom: 0, left: 0, right: 0, background: "#020f04", borderTop: "1px solid #1a2540", display: "flex", height: "56px", zIndex: 100 },
+    app: { minHeight: "100vh", background: "#000000", color: "#e8edf5", fontFamily: "sans-serif", paddingBottom: "64px" },
+    header: { background: "rgba(0,0,0,0.97)", borderBottom: "1px solid #1a2540", padding: "0 16px", height: "52px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky" as const, top: 0, zIndex: 50 },
+    card: { background: "#0a0a0a", border: "1px solid #1a2540", borderRadius: "10px", padding: "14px", marginBottom: "8px" },
+    nav: { position: "fixed" as const, bottom: 0, left: 0, right: 0, background: "#0a0a0a", borderTop: "1px solid #1a2540", display: "flex", height: "56px", zIndex: 100 },
     pill: (c: string) => ({ background: c+"18", border: "1px solid "+c+"40", borderRadius: "4px", padding: "2px 8px", fontSize: "10px", fontWeight: 700, color: c }),
     green: { color: "#00ff88" },
     red: { color: "#ff3366" },
@@ -218,7 +218,7 @@ export default function App() {
 
   return (
     <div style={S.app}>
-      {notif && <div style={{ position: "fixed" as const, top: "60px", left: "50%", transform: "translateX(-50%)", background: "#031507", border: "1px solid #00ff8840", borderRadius: "6px", padding: "8px 18px", zIndex: 200, color: "#00ff88", fontWeight: 600, fontSize: "12px", whiteSpace: "nowrap" as const }}>{notif}</div>}
+      {notif && <div style={{ position: "fixed" as const, top: "60px", left: "50%", transform: "translateX(-50%)", background: "#111111", border: "1px solid #00ff8840", borderRadius: "6px", padding: "8px 18px", zIndex: 200, color: "#00ff88", fontWeight: 600, fontSize: "12px", whiteSpace: "nowrap" as const }}>{notif}</div>}
 
       {/* ══ LEADERBOARD ══ */}
       {page === "leaderboard" && <>
@@ -229,16 +229,16 @@ export default function App() {
           </div>
           <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
             {(["pnl","winrate","volume"] as const).map(f => (
-              <button key={f} onClick={() => setFilter(f)} style={{ ...S.btnGhost, padding: "4px 10px", fontSize: "10px", border: `1px solid ${filter===f?"#00ff88":"#0a2e10"}`, color: filter===f?"#00ff88":"#8899bb" }}>{f === "pnl" ? "PnL" : f === "winrate" ? "Win%" : "Vol"}</button>
+              <button key={f} onClick={() => setFilter(f)} style={{ ...S.btnGhost, padding: "4px 10px", fontSize: "10px", border: `1px solid ${filter===f?"#00ff88":"#222222"}`, color: filter===f?"#00ff88":"#8899bb" }}>{f === "pnl" ? "PnL" : f === "winrate" ? "Win%" : "Vol"}</button>
             ))}
-            <button onClick={connectWallet} style={{ background: walletConnected ? "#031507" : "linear-gradient(135deg,#ffaa00,#ff8800)", border: "1px solid #ffaa0040", borderRadius: "6px", color: walletConnected ? "#00ff88" : "#000", padding: "4px 10px", fontSize: "10px", fontWeight: 700, cursor: "pointer" }}>
+            <button onClick={connectWallet} style={{ background: walletConnected ? "#111111" : "linear-gradient(135deg,#ffaa00,#ff8800)", border: "1px solid #ffaa0040", borderRadius: "6px", color: walletConnected ? "#00ff88" : "#000", padding: "4px 10px", fontSize: "10px", fontWeight: 700, cursor: "pointer" }}>
               {walletConnected ? wallet : "Connect"}
             </button>
           </div>
         </div>
 
         {/* Market Ticker */}
-        <div style={{ background: "#020f04", borderBottom: "1px solid #1a2540", padding: "8px 16px", display: "flex", gap: "16px", overflowX: "auto" as const, scrollbarWidth: "none" as const }}>
+        <div style={{ background: "#0a0a0a", borderBottom: "1px solid #1a2540", padding: "8px 16px", display: "flex", gap: "16px", overflowX: "auto" as const, scrollbarWidth: "none" as const }}>
           {markets.map(m => (
             <div key={m.symbol} style={{ flexShrink: 0, cursor: "pointer" }}>
               <span style={{ fontSize: "10px", color: "#8899bb", fontFamily: "monospace" }}>{m.symbol} </span>
@@ -318,7 +318,7 @@ export default function App() {
             <div style={S.card}>
               <div style={{ fontSize: "11px", letterSpacing: "2px", color: "#4a5a7a", marginBottom: "10px" }}>OPEN POSITIONS</div>
               {selectedTrader.positions.map((p, i) => (
-                <div key={i} style={{ background: "#010d03", borderRadius: "8px", padding: "10px", marginBottom: "6px" }}>
+                <div key={i} style={{ background: "#000000", borderRadius: "8px", padding: "10px", marginBottom: "6px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div>
                       <span style={{ fontWeight: 700, fontSize: "13px" }}>{p.asset}</span>
@@ -414,7 +414,7 @@ export default function App() {
             <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#00ff88", marginBottom: "8px" }}>WEEKLY CHAMPIONSHIP</div>
             <div style={{ fontSize: "22px", fontWeight: 900, color: "#00ff88", fontFamily: "monospace" }}>$5,000 USDC</div>
             <div style={{ fontSize: "12px", color: "#8899bb", marginTop: "4px" }}>Prize pool · Ends in 4d 12h 33m</div>
-            <div style={{ marginTop: "12px", background: "#010d03", borderRadius: "8px", padding: "10px" }}>
+            <div style={{ marginTop: "12px", background: "#000000", borderRadius: "8px", padding: "10px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "#8899bb", marginBottom: "6px" }}>
                 <span>🥇 1st Place</span><span style={{ color: "#00ff88", fontWeight: 700 }}>$2,500</span>
               </div>
