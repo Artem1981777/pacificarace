@@ -115,15 +115,37 @@ export default function App() {
 
   const toast = (m: string) => { setNotif(m); setTimeout(() => setNotif(""), 3000) }
 
-  // Simulate real-time updates
+  // Fetch real Pacifica market data
+  useEffect(() => {
+    async function fetchMarkets() {
+      try {
+        const res = await fetch("https://api.pacifica.fi/api/v1/info/prices")
+        const data = await res.json()
+        if (data.success && data.data) {
+          const symbols = ["BTC", "ETH", "SOL", "ARB"]
+          const updated = data.data
+            .filter((m: any) => symbols.includes(m.symbol))
+            .map((m: any) => ({
+              symbol: m.symbol + "-PERP",
+              price: parseFloat(m.mark),
+              change: ((parseFloat(m.mark) - parseFloat(m.yesterday_price)) / parseFloat(m.yesterday_price)) * 100,
+              volume: parseFloat(m.volume_24h),
+              fundingRate: parseFloat(m.funding),
+            }))
+          if (updated.length > 0) setMarkets(updated)
+        }
+      } catch {
+        // fallback to mock data
+      }
+    }
+    fetchMarkets()
+    const interval = setInterval(fetchMarkets, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Simulate trader updates
   useEffect(() => {
     const interval = setInterval(() => {
-      setMarkets(prev => prev.map(m => ({
-        ...m,
-        price: m.price * (1 + (Math.random() - 0.499) * 0.002),
-        change: m.change + (Math.random() - 0.5) * 0.1,
-        volume: m.volume + Math.random() * 100000,
-      })))
       setTraders(prev => prev.map(t => ({
         ...t,
         pnl: t.pnl + (Math.random() - 0.48) * 100,
