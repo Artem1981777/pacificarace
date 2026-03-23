@@ -403,12 +403,78 @@ export default function App() {
         </div>
       </>}
 
+      {/* ══ TOURNAMENT ══ */}
+      {page === "tournament" && <>
+        <div style={S.header}>
+          <span style={{ fontWeight: 800 }}>🏎️ PacificaRace Tournament</span>
+          <span style={{ ...S.pill("#ffaa00") }}>LIVE</span>
+        </div>
+        <div style={{ padding: "12px" }}>
+          <div style={{ ...S.card, background: "linear-gradient(135deg,#0d0a00,#1a1200)", border: "1px solid #ffaa0040" }}>
+            <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#ffaa00", marginBottom: "8px" }}>WEEKLY CHAMPIONSHIP</div>
+            <div style={{ fontSize: "22px", fontWeight: 900, color: "#ffaa00", fontFamily: "monospace" }}>$5,000 USDC</div>
+            <div style={{ fontSize: "12px", color: "#8899bb", marginTop: "4px" }}>Prize pool · Ends in 4d 12h 33m</div>
+            <div style={{ marginTop: "12px", background: "#05070d", borderRadius: "8px", padding: "10px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "#8899bb", marginBottom: "6px" }}>
+                <span>🥇 1st Place</span><span style={{ color: "#ffaa00", fontWeight: 700 }}>$2,500</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "#8899bb", marginBottom: "6px" }}>
+                <span>🥈 2nd Place</span><span style={{ color: "#c0c0c0", fontWeight: 700 }}>$1,500</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "#8899bb" }}>
+                <span>🥉 3rd Place</span><span style={{ color: "#cd7f32", fontWeight: 700 }}>$1,000</span>
+              </div>
+            </div>
+            <button onClick={() => toast("✅ Joined Weekly Championship!")} style={{ ...S.btnG, width: "100%", padding: "12px", marginTop: "12px" }}>Join Tournament</button>
+          </div>
+
+          <div style={S.card}>
+            <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#4a5a7a", marginBottom: "10px" }}>TOURNAMENT LEADERBOARD</div>
+            {sorted.slice(0, 5).map((t, i) => (
+              <div key={t.id} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 0", borderBottom: i < 4 ? "1px solid #1a2540" : "none" }}>
+                <span style={{ fontSize: "16px" }}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":"#"+(i+1)}</span>
+                <span style={{ fontSize: "20px" }}>{t.avatar}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 700, fontSize: "13px" }}>{t.name}</div>
+                  <div style={{ fontSize: "11px", color: "#8899bb" }}>Win Rate: {t.winRate}%</div>
+                </div>
+                <div style={{ textAlign: "right" as const }}>
+                  <div style={{ color: t.pnl >= 0 ? "#00ff88" : "#ff3366", fontWeight: 700, fontFamily: "monospace", fontSize: "13px" }}>{t.pnl >= 0 ? "+" : ""}${fmt(t.pnl)}</div>
+                  <div style={{ fontSize: "10px", color: "#ffaa00" }}>{i===0?"$2,500":i===1?"$1,500":i===2?"$1,000":"—"}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={S.card}>
+            <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#4a5a7a", marginBottom: "10px" }}>UPCOMING TOURNAMENTS</div>
+            {[
+              { name: "BTC Sprint", prize: "$1,000", starts: "Tomorrow", duration: "24h" },
+              { name: "SOL Speedrun", prize: "$500", starts: "In 2 days", duration: "12h" },
+              { name: "Monthly Grand Prix", prize: "$10,000", starts: "Apr 1", duration: "30 days" },
+            ].map((t, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: i < 2 ? "1px solid #1a2540" : "none" }}>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: "13px" }}>🏎️ {t.name}</div>
+                  <div style={{ fontSize: "11px", color: "#8899bb" }}>Starts {t.starts} · {t.duration}</div>
+                </div>
+                <div style={{ textAlign: "right" as const }}>
+                  <div style={{ color: "#ffaa00", fontWeight: 700, fontSize: "13px" }}>{t.prize}</div>
+                  <button onClick={() => toast("Registered for " + t.name + "!")} style={{ ...S.btnGhost, padding: "3px 8px", fontSize: "10px", marginTop: "4px" }}>Register</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </>}
+
       {/* ══ NAV ══ */}
       <nav style={S.nav}>
         {[
           { id: "leaderboard", l: "Leaders", i: <Trophy size={16} /> },
           { id: "feed", l: "Feed", i: <Flame size={16} /> },
           { id: "markets", l: "Markets", i: <BarChart3 size={16} /> },
+          { id: "tournament", l: "Race", i: <span style={{fontSize:16}}>🏎️</span> },
         ].map(n => (
           <button key={n.id} onClick={() => setPage(n.id)} style={{ flex: 1, background: "none", border: "none", color: page===n.id?"#ffaa00":"#4a5a7a", cursor: "pointer", display: "flex", flexDirection: "column" as const, alignItems: "center", justifyContent: "center", gap: "2px", fontSize: "9px", fontWeight: page===n.id?700:500 }}>
             {n.i}<span>{n.l}</span>
