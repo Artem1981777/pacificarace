@@ -143,6 +143,35 @@ export default function App() {
     return () => clearInterval(interval)
   }, [])
 
+  // Fetch real trades from Pacifica API
+  useEffect(() => {
+    const symbols = ["BTC", "ETH", "SOL", "ARB", "DOGE"]
+    async function fetchRealTrades() {
+      try {
+        const symbol = symbols[Math.floor(Math.random() * symbols.length)]
+        const res = await fetch("https://api.pacifica.fi/api/v1/trades?symbol=" + symbol)
+        const data = await res.json()
+        if (data.success && data.data && data.data.length > 0) {
+          const realTrades = data.data.slice(0, 3).map((t: any) => ({
+            trader: "Pacifica Trader",
+            asset: symbol + "-PERP",
+            side: t.side.includes("long") ? "Long" as const : "Short" as const,
+            size: parseFloat(t.amount),
+            price: parseFloat(t.price),
+            pnl: (Math.random() - 0.3) * parseFloat(t.price) * parseFloat(t.amount) * 0.01,
+            time: t.created_at,
+            likes: Math.floor(Math.random() * 50),
+            liked: false
+          }))
+          setTrades(prev => [...realTrades, ...prev.slice(0, 10)])
+        }
+      } catch {}
+    }
+    fetchRealTrades()
+    const interval = setInterval(fetchRealTrades, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   // Simulate trader updates
   useEffect(() => {
     const interval = setInterval(() => {
